@@ -1,0 +1,32 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+//            storeFile file('G:/Dev_Accessibility/SettingsAccessibility3_4.75/keys/key.jks')
+        }
+    }
+    compileSdkVersion 26
+    buildToolsVersion '27.0.2'
+    defaultConfig {
+        applicationId "com.neoend.gms.check"
+        minSdkVersion 22
+        targetSdkVersion 22
+        versionCode 2
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    provided fileTree(dir: "$projectDir/external-libs", include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.0.2'
+}

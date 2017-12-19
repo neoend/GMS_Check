@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">GMS Check</string>
+    <string name="version_check">GMS Version Check</string>
+    <string name="search">Search</string>
+    <string name="run">Run</string>
+    <string name="app_setting">Setting</string>
+    <string name="build_display_id">ro.build.display.id</string>
+    <string name="factory_version">ro.lge.factoryversion</string>
+    <string name="gms_version_property">ro.com.google.gmsversion</string>
+    <string name="mada_property">ro.com.lge.mada</string>
+    <string name="all_apps">All apps</string>
+</resources>
