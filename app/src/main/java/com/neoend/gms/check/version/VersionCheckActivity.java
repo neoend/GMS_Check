@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.SystemProperties;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +16,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +37,10 @@ public class VersionCheckActivity extends AppCompatActivity {
     private Button mBtnSetting;
     private Button mBtnLaunch;
     private CheckBox mCheckAllApps;
+    private RadioGroup mAppCategory;
+    private RadioButton mAppGoogle;
+    private RadioButton mAppOthers;
+    private RadioButton mAppAll;
     private ListView mListView;
 
     private AppBaseAdapter mAppBaseAdapter;
@@ -49,26 +57,68 @@ public class VersionCheckActivity extends AppCompatActivity {
         TextView buildDisplayId = (TextView)findViewById(R.id.build_display_desc);
         TextView buildDate = (TextView)findViewById(R.id.build_date);
         TextView factoryVersion = (TextView)findViewById(R.id.factory_version);
-        gmsVersion.setText(SystemProperties.get("ro.com.google.gmsversion"));
-        mada.setText(SystemProperties.get("ro.com.lge.mada"));
-        buildDisplayId.setText(SystemProperties.get("ro.build.description"));
-        buildDate.setText(SystemProperties.get("ro.build.date"));
-        factoryVersion.setText(SystemProperties.get("ro.lge.factoryversion"));
+        String gmsVersionStr = SystemProperties.get("ro.com.google.gmsversion");
+        String madaStr = SystemProperties.get("ro.com.lge.mada");
+        String buildDisplayIdStr = SystemProperties.get("ro.build.description");
+        String buildDateStr = SystemProperties.get("ro.build.date");
+        String factoryVerStr = SystemProperties.get("ro.lge.factoryversion");
+        if (TextUtils.isEmpty(gmsVersionStr)) { gmsVersionStr = getString(R.string.gms_version); }
+        if (TextUtils.isEmpty(madaStr)) { madaStr = getString(R.string.mada); }
+        if (TextUtils.isEmpty(factoryVerStr)) { factoryVerStr = getString(R.string.factory_version_str); }
+        gmsVersion.setText(gmsVersionStr);
+        mada.setText(madaStr);
+        buildDisplayId.setText(buildDisplayIdStr);
+        buildDate.setText(buildDateStr);
+        factoryVersion.setText(factoryVerStr);
 
         mSearchField = (EditText)findViewById(R.id.search_field);
         mBtnLaunch = (Button)findViewById(R.id.btn_launch);
         mBtnSetting = (Button)findViewById(R.id.btn_setting);
-        mCheckAllApps = (CheckBox)findViewById(R.id.check_all_apps);
+        //mCheckAllApps = (CheckBox)findViewById(R.id.check_all_apps);
+        mAppCategory = (RadioGroup)findViewById(R.id.radioGroupAppCategory);
+        mAppGoogle = (RadioButton)findViewById(R.id.radioBtnGoogle);
+        mAppOthers = (RadioButton)findViewById(R.id.radioBtnOthers);
+        mAppAll = (RadioButton)findViewById(R.id.radioBtnAll);
         mListView = (ListView)findViewById(R.id.listview);
 
         mAppBaseAdapter = new AppBaseAdapter(this);
 
-        mCheckAllApps.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//        mCheckAllApps.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                mAppBaseAdapter.setIsAllApps(isChecked);
+//            }
+//        });
+
+        mAppCategory.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mAppBaseAdapter.setIsAllApps(isChecked);
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.radioBtnGoogle:
+                        mAppBaseAdapter.setAppCategory(R.id.radioBtnGoogle);
+                        break;
+                    case R.id.radioBtnOthers:
+                        mAppBaseAdapter.setAppCategory(R.id.radioBtnOthers);
+                        break;
+                    case R.id.radioBtnAll:
+                        mAppBaseAdapter.setAppCategory(R.id.radioBtnAll);
+                        break;
+                    default:
+                        mAppBaseAdapter.setAppCategory(R.id.radioBtnGoogle);
+                        break;
+                }
             }
         });
+
+        RadioButton.OnClickListener radioBtnClickListener = new RadioButton.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        };
+
+        mAppGoogle.setChecked(true);
 
         mListView.setAdapter(mAppBaseAdapter);
         mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);

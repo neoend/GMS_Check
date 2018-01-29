@@ -9,4 +9,12 @@
     <string name="gms_version_property">ro.com.google.gmsversion</string>
     <string name="mada_property">ro.com.lge.mada</string>
     <string name="all_apps">All apps</string>
+    <string name="radioBtnGoogleApps">Google apps</string>
+    <string name="radioBtnOthers">Others</string>
+    <string name="radioBtnAll">All apps</string>
+    <string name="gms_version">gms_version</string>
+    <string name="mada">mada</string>
+    <string name="build_display_desc">build_display_desc</string>
+    <string name="build_date">build_date</string>
+    <string name="factory_version_str">factory_version</string>
 </resources>

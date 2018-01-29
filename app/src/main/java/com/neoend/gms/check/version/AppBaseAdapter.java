@@ -32,6 +32,7 @@ public class AppBaseAdapter extends BaseAdapter {
     private LayoutInflater mInflater = null;
     private ArrayList<AppInfo> mAllApps = new ArrayList<AppInfo>();
     private ArrayList<AppInfo> mGmsApps = new ArrayList<AppInfo>();
+    private ArrayList<AppInfo> mOtherApps = new ArrayList<AppInfo>();
     private ArrayList<AppInfo> mApps = new ArrayList<AppInfo>();
     private ArrayList<AppInfo> mAppsSelected = new ArrayList<AppInfo>();
     Comparator<AppInfo> mAppsComparator;
@@ -39,6 +40,7 @@ public class AppBaseAdapter extends BaseAdapter {
     private Context mContext = null;
     private int mSelectedPosition = -1;
     private boolean mIsAllApps;
+    private int mAppCategory = R.id.radioBtnGoogle;
 
     public AppBaseAdapter(Context c) {
         this.mContext = c;
@@ -131,10 +133,24 @@ public class AppBaseAdapter extends BaseAdapter {
 //        }
         mApps = null;
 
-        if (mIsAllApps) {
-            mApps = mAllApps;
-        } else {
-            mApps = mGmsApps;
+//        if (mIsAllApps) {
+//            mApps = mAllApps;
+//        } else {
+//            mApps = mGmsApps;
+//        }
+        switch (mAppCategory) {
+            case R.id.radioBtnGoogle:
+                mApps = mGmsApps;
+                break;
+            case R.id.radioBtnOthers:
+                mApps = mOtherApps;
+                break;
+            case R.id.radioBtnAll:
+                mApps = mAllApps;
+                break;
+            default:
+                mApps = mGmsApps;
+                break;
         }
     }
 
@@ -143,6 +159,7 @@ public class AppBaseAdapter extends BaseAdapter {
         List<ApplicationInfo> applicationInfos = pm.getInstalledApplications(PackageManager.GET_META_DATA);
         mAllApps.clear();
         mGmsApps.clear();
+        mOtherApps.clear();
 
         PackageInfo pi = null;
         Log.d(TAG, "ApplicationInfoSize: " + applicationInfos.size());
@@ -164,12 +181,15 @@ public class AppBaseAdapter extends BaseAdapter {
 
             if (ai.packageName.startsWith(PKG_COM_ANDROID) || ai.packageName.startsWith(PKG_COM_GOOGLE)) {
                 mGmsApps.add(appInfo);
+            } else {
+                mOtherApps.add(appInfo);
             }
         }
         Log.d(TAG, "applicationInfo GMS size: " + mAllApps.size());
 
         Collections.sort(mAllApps, mAppsComparator);
         Collections.sort(mGmsApps, mAppsComparator);
+        Collections.sort(mOtherApps, mAppsComparator);
     }
 
     public void setSelectedItem(int position) {
@@ -179,6 +199,19 @@ public class AppBaseAdapter extends BaseAdapter {
 
     public void setIsAllApps(boolean isAllApps) {
         mIsAllApps = isAllApps;
+        makeApps();
+        mAppsSelected.clear();
+        mAppsSelected.addAll(mApps);
+
+        if (!TextUtils.isEmpty(mKeywoard)) {
+            filter(mKeywoard);
+        } else {
+            notifyDataSetChanged();
+        }
+    }
+
+    public void setAppCategory(int category) {
+        mAppCategory = category;
         makeApps();
         mAppsSelected.clear();
         mAppsSelected.addAll(mApps);

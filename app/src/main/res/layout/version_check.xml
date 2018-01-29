@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,78 +15,122 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <TextView android:id="@+id/gms_version"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textColor="@android:color/holo_blue_dark"
-                  android:textStyle="bold"
-                  android:layout_marginEnd="@dimen/gms_version_margin"/>
-        <TextView android:id="@+id/mada"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textColor="@android:color/holo_blue_dark"
-                  android:textStyle="bold"/>
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <TextView
+            android:id="@+id/gms_version"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end">
-            <CheckBox
-                android:id="@+id/check_all_apps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/all_apps"/>
-        </LinearLayout>
+            android:layout_marginEnd="@dimen/gms_version_margin"
+            android:text="@string/gms_version"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/mada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mada"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textStyle="bold" />
     </LinearLayout>
-
-    <TextView android:id="@+id/build_display_desc"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
-    <TextView android:id="@+id/build_date"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
-    <TextView android:id="@+id/factory_version"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/gms_version_margin"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/radioGroupAppCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioBtnGoogle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radioBtnGoogleApps" />
+
+            <RadioButton
+                android:id="@+id/radioBtnOthers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radioBtnOthers" />
+
+            <RadioButton
+                android:id="@+id/radioBtnAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radioBtnAll" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/build_display_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/build_display_desc" />
+
+    <TextView
+        android:id="@+id/build_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/build_date" />
+
+    <TextView
+        android:id="@+id/factory_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/factory_version_str" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/gms_version_margin" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal">
+
         <EditText
             android:id="@+id/search_field"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/search" />
-        <Button android:id="@+id/btn_launch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/run"/>
-        <Button android:id="@+id/btn_setting"
+            android:hint="@string/search"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/btn_launch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_setting"/>
+            android:text="@string/run" />
+
+        <Button
+            android:id="@+id/btn_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_setting" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:listSelector="@drawable/list_bg"/>
+        android:listSelector="@drawable/list_bg" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/text"
                 android:layout_width="wrap_content"
