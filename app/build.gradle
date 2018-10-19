@@ -6,14 +6,14 @@ android {
 //            storeFile file('G:/Dev_Accessibility/SettingsAccessibility3_4.75/keys/key.jks')
         }
     }
-    compileSdkVersion 26
-    buildToolsVersion '27.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.neoend.gms.check"
-        minSdkVersion 22
-        targetSdkVersion 22
-        versionCode 4
-        versionName "1.1"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 20181019
+        versionName "1.1.1"
     }
     buildTypes {
         release {
@@ -26,7 +26,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    provided fileTree(dir: "$projectDir/external-libs", include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    compileOnly fileTree(dir: "$projectDir/external-libs", include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.1.1'
 }

@@ -2,6 +2,7 @@ package com.neoend.gms.util;
 
 import android.content.Context;
 import android.os.Environment;
+import android.os.SystemProperties;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,6 +13,16 @@ import java.io.IOException;
  * Created by jeonghun.ye on 2016-06-14.
  */
 public class Utils {
+    public static String getSystemProperty(String prop) {
+        String value = "";
+        try {
+            value = SystemProperties.get(prop);
+        } catch (Exception e) {
+            value = e.getMessage();
+        }
+        return value;
+    }
+
     public static boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
