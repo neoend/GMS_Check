@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    tools:context="com.neoend.gms.check.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <TextView android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/desc_grant_permission" />
+    <View android:layout_height="20dp" android:layout_width="0dp" />
+    <Button android:id="@+id/grantPermissionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/buttonGrantPermission"
+        android:onClick="grantPermission"/>
+    <View android:layout_height="20dp" android:layout_width="0dp" />
+    <Button android:id="@+id/goSettingButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/buttonGoAppSetting"
+        android:onClick="goAppSetting"/>
+</LinearLayout>

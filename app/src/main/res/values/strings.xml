@@ -17,4 +17,8 @@
     <string name="build_display_desc">build_display_desc</string>
     <string name="build_date">build_date</string>
     <string name="factory_version_str">factory_version</string>
+    <string name="title_activity_main">Main Activity</string>
+    <string name="desc_grant_permission">Grant External storage access permission for reading system properties</string>
+    <string name="buttonGrantPermission">Grant Permission</string>
+    <string name="buttonGoAppSetting">Go App Setting</string>
 </resources>

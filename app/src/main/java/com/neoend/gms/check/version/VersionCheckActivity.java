@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.neoend.gms.check.R;
+import com.neoend.gms.util.SystemProperty;
 import com.neoend.gms.util.Utils;
 
 public class VersionCheckActivity extends AppCompatActivity {
@@ -48,6 +49,8 @@ public class VersionCheckActivity extends AppCompatActivity {
 
     private AppInfo mAppInfo;
 
+    private SystemProperty systemProperty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +62,19 @@ public class VersionCheckActivity extends AppCompatActivity {
         TextView buildDate = (TextView)findViewById(R.id.build_date);
         TextView factoryVersion = (TextView)findViewById(R.id.factory_version);
 
+        /*
         String gmsVersionStr = Utils.getSystemProperty("ro.com.google.gmsversion");
         String madaStr = Utils.getSystemProperty("ro.com.lge.mada");
         String buildDisplayIdStr = Utils.getSystemProperty("ro.build.description");
         String buildDateStr = Utils.getSystemProperty("ro.build.date");
         String factoryVerStr = Utils.getSystemProperty("ro.lge.factoryversion");
+        */
+        systemProperty = new SystemProperty();
+        String gmsVersionStr = systemProperty.get("ro.com.google.gmsversion");
+        String madaStr = systemProperty.get("ro.com.lge.mada");
+        String buildDisplayIdStr = systemProperty.get("ro.build.description");
+        String buildDateStr = systemProperty.get("ro.build.date");
+        String factoryVerStr = systemProperty.get("ro.lge.factoryversion");
 
         if (TextUtils.isEmpty(gmsVersionStr)) { gmsVersionStr = getString(R.string.gms_version); }
         if (TextUtils.isEmpty(madaStr)) { madaStr = getString(R.string.mada); }
