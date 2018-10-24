@@ -68,22 +68,56 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/build_display_desc"
+        android:id="@+id/build_fingerprint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/build_display_desc" />
+        android:text="@string/build_fingerprint" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/board_platform"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/board_platform_str" />
+        <TextView
+            android:id="@+id/product_cpu_abi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/product_cpu_abi" />
+        <TextView
+            android:id="@+id/first_api_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/first_api_level" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/product_model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/product_model" />
+        <TextView
+            android:id="@+id/product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/product_name" />
+    </LinearLayout>
     <TextView
         android:id="@+id/build_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/build_date" />
-
-    <TextView
-        android:id="@+id/factory_version"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/factory_version_str" />
 
     <Space
         android:layout_width="match_parent"

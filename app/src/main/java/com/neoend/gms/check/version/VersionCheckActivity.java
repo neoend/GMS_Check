@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemProperties;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -24,7 +22,6 @@ import android.widget.Toast;
 
 import com.neoend.gms.check.R;
 import com.neoend.gms.util.SystemProperty;
-import com.neoend.gms.util.Utils;
 
 public class VersionCheckActivity extends AppCompatActivity {
 
@@ -58,9 +55,13 @@ public class VersionCheckActivity extends AppCompatActivity {
 
         TextView gmsVersion = (TextView)findViewById(R.id.gms_version);
         TextView mada = (TextView)findViewById(R.id.mada);
-        TextView buildDisplayId = (TextView)findViewById(R.id.build_display_desc);
+        TextView buildFingerprint = (TextView)findViewById(R.id.build_fingerprint);
+        TextView boardPlatform = (TextView)findViewById(R.id.board_platform);
+        TextView productCpuAbi = (TextView)findViewById(R.id.product_cpu_abi);
+        TextView fistApiLevel = (TextView)findViewById(R.id.first_api_level);
+        TextView productModel = (TextView)findViewById(R.id.product_model);
+        TextView productName = (TextView)findViewById(R.id.product_name);
         TextView buildDate = (TextView)findViewById(R.id.build_date);
-        TextView factoryVersion = (TextView)findViewById(R.id.factory_version);
 
         /*
         String gmsVersionStr = Utils.getSystemProperty("ro.com.google.gmsversion");
@@ -72,18 +73,26 @@ public class VersionCheckActivity extends AppCompatActivity {
         systemProperty = new SystemProperty();
         String gmsVersionStr = systemProperty.get("ro.com.google.gmsversion");
         String madaStr = systemProperty.get("ro.com.lge.mada");
-        String buildDisplayIdStr = systemProperty.get("ro.build.description");
+        String buildFingerprintStr = systemProperty.get("ro.build.fingerprint");
+        String boardPlatformStr = systemProperty.get("ro.board.platform");
+        String productCpuAbiStr = systemProperty.get("ro.product.cpu.abi");
+        String firstApiLevelStr = systemProperty.get("ro.product.first_api_level");
+        String productModelStr = systemProperty.get("ro.product.model");
+        String productNameStr = systemProperty.get("ro.product.name");
         String buildDateStr = systemProperty.get("ro.build.date");
-        String factoryVerStr = systemProperty.get("ro.lge.factoryversion");
 
         if (TextUtils.isEmpty(gmsVersionStr)) { gmsVersionStr = getString(R.string.gms_version); }
         if (TextUtils.isEmpty(madaStr)) { madaStr = getString(R.string.mada); }
-        if (TextUtils.isEmpty(factoryVerStr)) { factoryVerStr = getString(R.string.factory_version_str); }
+        if (TextUtils.isEmpty(boardPlatformStr)) { boardPlatformStr = getString(R.string.board_platform_str); }
         gmsVersion.setText(gmsVersionStr);
         mada.setText(madaStr);
-        buildDisplayId.setText(buildDisplayIdStr);
+        buildFingerprint.setText(buildFingerprintStr);
+        boardPlatform.setText(boardPlatformStr);
+        productCpuAbi.setText(productCpuAbiStr);
+        fistApiLevel.setText(firstApiLevelStr);
+        productModel.setText(productModelStr);
+        productName.setText(productNameStr);
         buildDate.setText(buildDateStr);
-        factoryVersion.setText(factoryVerStr);
 
         mSearchField = (EditText)findViewById(R.id.search_field);
         mBtnLaunch = (Button)findViewById(R.id.btn_launch);
