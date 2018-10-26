@@ -15,6 +15,14 @@ extern "C" {
 JNIEXPORT jstring JNICALL Java_com_neoend_gms_util_SystemCommandJNI_getprop
   (JNIEnv *, jobject);
 
+/*
+ * Class:     com_neoend_gms_util_SystemCommandJNI
+ * Method:    execute
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_neoend_gms_util_SystemCommandJNI_execute
+  (JNIEnv *, jobject, jstring);
+
 #ifdef __cplusplus
 }
 #endif

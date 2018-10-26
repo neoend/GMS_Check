@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="20dp"
+    android:layout_margin="10dp"
     tools:context="com.neoend.gms.check.MainActivity"
     tools:showIn="@layout/activity_main">
 
@@ -12,16 +12,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/desc_grant_permission" />
-    <View android:layout_height="20dp" android:layout_width="0dp" />
+    <View android:layout_height="10dp" android:layout_width="0dp" />
     <Button android:id="@+id/grantPermissionButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/buttonGrantPermission"
         android:onClick="grantPermission"/>
-    <View android:layout_height="20dp" android:layout_width="0dp" />
+    <View android:layout_height="10dp" android:layout_width="0dp" />
     <Button android:id="@+id/goSettingButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/buttonGoAppSetting"
         android:onClick="goAppSetting"/>
+    <View android:layout_height="10dp" android:layout_width="0dp" />
+    <Button android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="execute()"
+        android:onClick="execute" />
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

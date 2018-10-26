@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SystemProperty {
-    private ArrayList<String> props = new ArrayList<String>();
+    private String[] propsArray;
+    private ArrayList<String> propsArrayList = new ArrayList<String>();
     private HashMap<String, String> properties = new HashMap<String, String>();
 
     public SystemProperty() {
-        readFile();
+        readProps();
         parseProps();
     }
 
@@ -27,6 +28,15 @@ public class SystemProperty {
         return prop;
     }
 
+    private void readProps() {
+        String propString = SystemCommandJNI.getInstance().execute("/system/bin/getprop");
+        if (propString == null) {
+            return;
+        }
+
+        propsArray = propString.split("\\r?\\n");
+    }
+
     private void readFile() {
         File file = new File("/sdcard/getprop.txt");
 
@@ -35,15 +45,15 @@ public class SystemProperty {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             while (bufferedReader.ready()) {
                 String line = bufferedReader.readLine();
-                props.add(line);
+                propsArrayList.add(line);
             }
         } catch (Exception e) {
             Log.e("TAG", e.getMessage());
         }
-    }
+    } // readFile()
 
     private void parseProps() {
-        for (String line : props) {
+        for (String line : propsArray) {
             line = line.replace("]: [", "@");
             String[] parse = line.split("@");
 
@@ -66,7 +76,6 @@ public class SystemProperty {
                 default:
                     break;
             }
-
         }
-    }
+    } // parseProps()
 }

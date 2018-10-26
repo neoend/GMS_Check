@@ -53,15 +53,15 @@ public class VersionCheckActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.version_check);
 
-        TextView gmsVersion = (TextView)findViewById(R.id.gms_version);
-        TextView mada = (TextView)findViewById(R.id.mada);
-        TextView buildFingerprint = (TextView)findViewById(R.id.build_fingerprint);
-        TextView boardPlatform = (TextView)findViewById(R.id.board_platform);
-        TextView productCpuAbi = (TextView)findViewById(R.id.product_cpu_abi);
-        TextView fistApiLevel = (TextView)findViewById(R.id.first_api_level);
-        TextView productModel = (TextView)findViewById(R.id.product_model);
-        TextView productName = (TextView)findViewById(R.id.product_name);
-        TextView buildDate = (TextView)findViewById(R.id.build_date);
+        TextView gmsVersion = findViewById(R.id.gms_version);
+        TextView mada = findViewById(R.id.mada);
+        TextView buildFingerprint = findViewById(R.id.build_fingerprint);
+        TextView boardPlatform = findViewById(R.id.board_platform);
+        TextView productCpuAbi = findViewById(R.id.product_cpu_abi);
+        TextView fistApiLevel = findViewById(R.id.first_api_level);
+        TextView productModel = findViewById(R.id.product_model);
+        TextView productName = findViewById(R.id.product_name);
+        TextView buildDate = findViewById(R.id.build_date);
 
         /*
         String gmsVersionStr = Utils.getSystemProperty("ro.com.google.gmsversion");
@@ -94,15 +94,15 @@ public class VersionCheckActivity extends AppCompatActivity {
         productName.setText(productNameStr);
         buildDate.setText(buildDateStr);
 
-        mSearchField = (EditText)findViewById(R.id.search_field);
-        mBtnLaunch = (Button)findViewById(R.id.btn_launch);
-        mBtnSetting = (Button)findViewById(R.id.btn_setting);
-        //mCheckAllApps = (CheckBox)findViewById(R.id.check_all_apps);
-        mAppCategory = (RadioGroup)findViewById(R.id.radioGroupAppCategory);
-        mAppGoogle = (RadioButton)findViewById(R.id.radioBtnGoogle);
-        mAppOthers = (RadioButton)findViewById(R.id.radioBtnOthers);
-        mAppAll = (RadioButton)findViewById(R.id.radioBtnAll);
-        mListView = (ListView)findViewById(R.id.listview);
+        mSearchField = findViewById(R.id.search_field);
+        mBtnLaunch = findViewById(R.id.btn_launch);
+        mBtnSetting = findViewById(R.id.btn_setting);
+        //mCheckAllApps = findViewById(R.id.check_all_apps);
+        mAppCategory = findViewById(R.id.radioGroupAppCategory);
+        mAppGoogle = findViewById(R.id.radioBtnGoogle);
+        mAppOthers = findViewById(R.id.radioBtnOthers);
+        mAppAll = findViewById(R.id.radioBtnAll);
+        mListView = findViewById(R.id.listview);
 
         mAppBaseAdapter = new AppBaseAdapter(this);
 

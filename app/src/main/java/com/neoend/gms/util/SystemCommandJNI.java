@@ -7,6 +7,7 @@ public class SystemCommandJNI {
     }
 
     public native String getprop();
+    public native String execute(String cmd);
 
     private static SystemCommandJNI systemCommandJNI;
 

@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.neoend.gms.check.version.VersionCheckActivity;
@@ -21,11 +22,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private Intent gmsCheckIntent;
+    private TextView result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        result = findViewById(R.id.result);
+
         gmsCheckIntent = new Intent(this, VersionCheckActivity.class);
 
         // JNI call
@@ -35,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Not Granted!!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void execute(View view) {
+        result.setText(SystemCommandJNI.getInstance().execute("/system/bin/getprop"));
     }
 
     private void goGmsCheck() {
