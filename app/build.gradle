@@ -2,7 +2,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 apply plugin: 'com.android.application'
 
-// Project Structure¿¡¼­ ¼³Á¤ÇÑ NDK °æ·Î¸¦ ÀĞ¾îµé¿© ReturnÇÕ´Ï´Ù.
+// Project Structureì—ì„œ ì„¤ì •í•œ NDK ê²½ë¡œë¥¼ ì½ì–´ë“¤ì—¬ Returní•©ë‹ˆë‹¤.
 def getNdkBuildPath() {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -29,8 +29,8 @@ android {
         applicationId "com.neoend.gms.check"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 20181023
-        versionName "1.2.3"
+        versionCode 20181024
+        versionName "1.2.4"
     }
     buildTypes {
         release {
@@ -42,23 +42,23 @@ android {
     }
 
     sourceSets.main {
-        // CompileµÈ Native Library°¡ À§Ä¡ÇÏ´Â °æ·Î¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+        // Compileëœ Native Libraryê°€ ìœ„ì¹˜í•˜ëŠ” ê²½ë¡œë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
         jniLibs.srcDir 'src/main/libs'
 
-        // ¿©±â¿¡ JNI Source °æ·Î¸¦ ¼³Á¤ÇÏ¸é Android Studio¿¡¼­ ±âº»ÀûÀ¸·Î Áö¿øÇÏ´Â Native
-        // Library Build°¡ ÀÌ·ç¾îÁı´Ï´Ù. ÀÌ °æ¿ì¿¡ Android.mk¿Í Application.mk¸¦
-        // ÀÚµ¿À¸·Î »ı¼ºÇÏ±â ¶§¹®¿¡ Æí¸®ÇÏÁö¸¸, ¼¼ºÎ ¼³Á¤ÀÌ ¾î·Æ±â ¶§¹®¿¡ JNI SourceÀÇ
-        // °æ·Î¸¦ ÁöÁ¤ÇÏÁö ¾Ê½À´Ï´Ù.
+        // ì—¬ê¸°ì— JNI Source ê²½ë¡œë¥¼ ì„¤ì •í•˜ë©´ Android Studioì—ì„œ ê¸°ë³¸ì ìœ¼ë¡œ ì§€ì›í•˜ëŠ” Native
+        // Library Buildê°€ ì´ë£¨ì–´ì§‘ë‹ˆë‹¤. ì´ ê²½ìš°ì— Android.mkì™€ Application.mkë¥¼
+        // ìë™ìœ¼ë¡œ ìƒì„±í•˜ê¸° ë•Œë¬¸ì— í¸ë¦¬í•˜ì§€ë§Œ, ì„¸ë¶€ ì„¤ì •ì´ ì–´ë µê¸° ë•Œë¬¸ì— JNI Sourceì˜
+        // ê²½ë¡œë¥¼ ì§€ì •í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
         jni.srcDirs = []
     }
 
     ext {
-        // ¾ÆÁ÷Àº Task ³»¿¡¼­ Build TypeÀ» ±¸ºĞÇÒ ¹æ¹ıÀÌ ¾ø±â ¶§¹®¿¡ ÀÌ Property¸¦
-        // ÀÌ¿ëÇØ Native Library¸¦ Debugging °¡´ÉÇÏµµ·Ï BuildÇÒ Áö °áÁ¤ÇÕ´Ï´Ù.
+        // ì•„ì§ì€ Task ë‚´ì—ì„œ Build Typeì„ êµ¬ë¶„í•  ë°©ë²•ì´ ì—†ê¸° ë•Œë¬¸ì— ì´ Propertyë¥¼
+        // ì´ìš©í•´ Native Libraryë¥¼ Debugging ê°€ëŠ¥í•˜ë„ë¡ Buildí•  ì§€ ê²°ì •í•©ë‹ˆë‹¤.
         nativeDebuggable = true
     }
 
-    // NDKÀÇ ndk-build ¸í·ÉÀ» ÀÌ¿ëÇÏ¿© Native Library¸¦ BuildÇÏ±â À§ÇÑ Task¸¦ Á¤ÀÇÇÕ´Ï´Ù.
+    // NDKì˜ ndk-build ëª…ë ¹ì„ ì´ìš©í•˜ì—¬ Native Libraryë¥¼ Buildí•˜ê¸° ìœ„í•œ Taskë¥¼ ì •ì˜í•©ë‹ˆë‹¤.
     //noinspection GroovyAssignabilityCheck
     task buildNative(type: Exec, description: 'Compile JNI source via NDK') {
         if (nativeDebuggable) {
@@ -68,19 +68,19 @@ android {
         }
     }
 
-    // AppÀÇ Java Code¸¦ CompileÇÒ ¶§ buildNative Task¸¦ ½ÇÇàÇÏ¿© Native Libraryµµ °°ÀÌ
-    // BuildµÇµµ·Ï ¼³Á¤ÇÕ´Ï´Ù.
+    // Appì˜ Java Codeë¥¼ Compileí•  ë•Œ buildNative Taskë¥¼ ì‹¤í–‰í•˜ì—¬ Native Libraryë„ ê°™ì´
+    // Buildë˜ë„ë¡ ì„¤ì •í•©ë‹ˆë‹¤.
     tasks.withType(JavaCompile) {
         compileTask -> compileTask.dependsOn buildNative
     }
 
-    // NDK·Î »ı¼ºµÈ Native Library¿Í Object¸¦ »èÁ¦ÇÏ±â À§ÇÑ Task¸¦ Á¤ÀÇÇÕ´Ï´Ù.
+    // NDKë¡œ ìƒì„±ëœ Native Libraryì™€ Objectë¥¼ ì‚­ì œí•˜ê¸° ìœ„í•œ Taskë¥¼ ì •ì˜í•©ë‹ˆë‹¤.
     //noinspection GroovyAssignabilityCheck
     task cleanNative(type: Exec, description: 'Clean native objs and lib') {
         commandLine getNdkBuildPath(), '-C', file('src/main').absolutePath, 'clean'
     }
 
-    // GradleÀÇ clean Task¸¦ ½ÇÇàÇÒ ‹š, cleanNative Task¸¦ ½ÇÇàÇÏµµ·Ï ¼³Á¤ÇÕ´Ï´Ù.
+    // Gradleì˜ clean Taskë¥¼ ì‹¤í–‰í•  ë–„, cleanNative Taskë¥¼ ì‹¤í–‰í•˜ë„ë¡ ì„¤ì •í•©ë‹ˆë‹¤.
     clean.dependsOn 'cleanNative'
 }
 

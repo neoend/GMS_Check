@@ -19,8 +19,8 @@
     <string name="board_platform_str">board.platform</string>
     <string name="product_cpu_abi">product.cpu.abi</string>
     <string name="first_api_level">first_api_level</string>
-    <string name="product_model">product>.model</string>
-    <string name="product_name">product>.name</string>
+    <string name="product_model">product.model</string>
+    <string name="product_name">product.name</string>
     <string name="title_activity_main">Main Activity</string>
     <string name="desc_grant_permission">Grant External storage access permission for reading system properties</string>
     <string name="buttonGrantPermission">Grant Permission</string>

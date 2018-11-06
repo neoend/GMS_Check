@@ -3,6 +3,7 @@ package com.neoend.gms.check.version;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -31,6 +33,18 @@ public class VersionCheckActivity extends AppCompatActivity {
     public static final String INTENT_APP_DETAIL_SETTING = "android.settings.APPLICATION_DETAILS_SETTINGS";
     public static final String EXTRA_PKG_NAME = "android.intent.extra.PACKAGE_NAME";
     public static final String URI_SCHEME_PKG = "package:";
+
+    private TextView tvGmsVersion;
+    private TextView tvMada;
+    private TextView tvBuildFingerprint;
+    private TextView tvBoardPlatform;
+    private TextView tvProductCpuAbi;
+    private TextView tvFistApiLevel;
+    private TextView tvProductModel;
+    private TextView tvProductName;
+    private TextView tvBuildDate;
+
+    private ProgressBar progressBar;
 
     private EditText mSearchField;
     private Button mBtnSetting;
@@ -53,46 +67,17 @@ public class VersionCheckActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.version_check);
 
-        TextView gmsVersion = findViewById(R.id.gms_version);
-        TextView mada = findViewById(R.id.mada);
-        TextView buildFingerprint = findViewById(R.id.build_fingerprint);
-        TextView boardPlatform = findViewById(R.id.board_platform);
-        TextView productCpuAbi = findViewById(R.id.product_cpu_abi);
-        TextView fistApiLevel = findViewById(R.id.first_api_level);
-        TextView productModel = findViewById(R.id.product_model);
-        TextView productName = findViewById(R.id.product_name);
-        TextView buildDate = findViewById(R.id.build_date);
+        tvGmsVersion = findViewById(R.id.gms_version);
+        tvMada = findViewById(R.id.mada);
+        tvBuildFingerprint = findViewById(R.id.build_fingerprint);
+        tvBoardPlatform = findViewById(R.id.board_platform);
+        tvProductCpuAbi = findViewById(R.id.product_cpu_abi);
+        tvFistApiLevel = findViewById(R.id.first_api_level);
+        tvProductModel = findViewById(R.id.product_model);
+        tvProductName = findViewById(R.id.product_name);
+        tvBuildDate = findViewById(R.id.build_date);
 
-        /*
-        String gmsVersionStr = Utils.getSystemProperty("ro.com.google.gmsversion");
-        String madaStr = Utils.getSystemProperty("ro.com.lge.mada");
-        String buildDisplayIdStr = Utils.getSystemProperty("ro.build.description");
-        String buildDateStr = Utils.getSystemProperty("ro.build.date");
-        String factoryVerStr = Utils.getSystemProperty("ro.lge.factoryversion");
-        */
-        systemProperty = new SystemProperty();
-        String gmsVersionStr = systemProperty.get("ro.com.google.gmsversion");
-        String madaStr = systemProperty.get("ro.com.lge.mada");
-        String buildFingerprintStr = systemProperty.get("ro.build.fingerprint");
-        String boardPlatformStr = systemProperty.get("ro.board.platform");
-        String productCpuAbiStr = systemProperty.get("ro.product.cpu.abi");
-        String firstApiLevelStr = systemProperty.get("ro.product.first_api_level");
-        String productModelStr = systemProperty.get("ro.product.model");
-        String productNameStr = systemProperty.get("ro.product.name");
-        String buildDateStr = systemProperty.get("ro.build.date");
-
-        if (TextUtils.isEmpty(gmsVersionStr)) { gmsVersionStr = getString(R.string.gms_version); }
-        if (TextUtils.isEmpty(madaStr)) { madaStr = getString(R.string.mada); }
-        if (TextUtils.isEmpty(boardPlatformStr)) { boardPlatformStr = getString(R.string.board_platform_str); }
-        gmsVersion.setText(gmsVersionStr);
-        mada.setText(madaStr);
-        buildFingerprint.setText(buildFingerprintStr);
-        boardPlatform.setText(boardPlatformStr);
-        productCpuAbi.setText(productCpuAbiStr);
-        fistApiLevel.setText(firstApiLevelStr);
-        productModel.setText(productModelStr);
-        productName.setText(productNameStr);
-        buildDate.setText(buildDateStr);
+        progressBar = findViewById(R.id.progressBar);
 
         mSearchField = findViewById(R.id.search_field);
         mBtnLaunch = findViewById(R.id.btn_launch);
@@ -104,95 +89,15 @@ public class VersionCheckActivity extends AppCompatActivity {
         mAppAll = findViewById(R.id.radioBtnAll);
         mListView = findViewById(R.id.listview);
 
-        mAppBaseAdapter = new AppBaseAdapter(this);
+        new ProcessingUITask().execute();
+        /*
+        String gmsVersionStr = Utils.getSystemProperty("ro.com.google.gmsversion");
+        String madaStr = Utils.getSystemProperty("ro.com.lge.mada");
+        String buildDisplayIdStr = Utils.getSystemProperty("ro.build.description");
+        String buildDateStr = Utils.getSystemProperty("ro.build.date");
+        String factoryVerStr = Utils.getSystemProperty("ro.lge.factoryversion");
+        */
 
-//        mCheckAllApps.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                mAppBaseAdapter.setIsAllApps(isChecked);
-//            }
-//        });
-
-        mAppCategory.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.radioBtnGoogle:
-                        mAppBaseAdapter.setAppCategory(R.id.radioBtnGoogle);
-                        break;
-                    case R.id.radioBtnOthers:
-                        mAppBaseAdapter.setAppCategory(R.id.radioBtnOthers);
-                        break;
-                    case R.id.radioBtnAll:
-                        mAppBaseAdapter.setAppCategory(R.id.radioBtnAll);
-                        break;
-                    default:
-                        mAppBaseAdapter.setAppCategory(R.id.radioBtnGoogle);
-                        break;
-                }
-            }
-        });
-
-        RadioButton.OnClickListener radioBtnClickListener = new RadioButton.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-            }
-        };
-
-        mAppGoogle.setChecked(true);
-
-        mListView.setAdapter(mAppBaseAdapter);
-        mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        mListView.setItemsCanFocus(false);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mAppBaseAdapter.setSelectedItem(position);
-                mAppInfo = (AppInfo)mListView.getItemAtPosition(position);
-            }
-        });
-
-        mSearchField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mAppBaseAdapter.setSelectedItem(-1);
-                mAppInfo = null;
-
-                String text = mSearchField.getText().toString().toLowerCase();
-                mAppBaseAdapter.filter(text);
-
-                if (mAppBaseAdapter.getCount() == 1) {
-                    mAppBaseAdapter.setSelectedItem(0);
-                    mAppInfo = (AppInfo)mListView.getItemAtPosition(0);
-                }
-            }
-        });
-
-        mBtnLaunch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launch();
-            }
-        });
-
-        mBtnSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mAppInfo != null) {
-                    //Toast.makeText(VersionCheckActivity.this, mAppInfo.pkg, Toast.LENGTH_LONG).show();
-                    goAppInfo();
-//                    goPermissionsSetting();
-                }
-            }
-        });
     }
 
     public void launch() {
@@ -226,6 +131,141 @@ public class VersionCheckActivity extends AppCompatActivity {
         }
     }
 
+    class ProcessingUITask extends AsyncTask<Integer, Integer, Integer> {
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            systemProperty = new SystemProperty();
+
+            mAppBaseAdapter = new AppBaseAdapter(getBaseContext());
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+
+            String gmsVersionStr = systemProperty.get("ro.com.google.gmsversion");
+            String madaStr = systemProperty.get("ro.com.lge.mada");
+            String buildFingerprintStr = systemProperty.get("ro.build.fingerprint");
+            String boardPlatformStr = systemProperty.get("ro.board.platform");
+            String productCpuAbiStr = systemProperty.get("ro.product.cpu.abi");
+            String firstApiLevelStr = systemProperty.get("ro.product.first_api_level");
+            String productModelStr = systemProperty.get("ro.product.model");
+            String productNameStr = systemProperty.get("ro.product.name");
+            String buildDateStr = systemProperty.get("ro.build.date");
+
+            if (TextUtils.isEmpty(gmsVersionStr)) { gmsVersionStr = getString(R.string.gms_version); }
+            if (TextUtils.isEmpty(madaStr)) { madaStr = getString(R.string.mada); }
+            if (TextUtils.isEmpty(boardPlatformStr)) { boardPlatformStr = getString(R.string.board_platform_str); }
+            tvGmsVersion.setText(gmsVersionStr);
+            tvMada.setText(madaStr);
+            tvBuildFingerprint.setText(buildFingerprintStr);
+            tvBoardPlatform.setText(boardPlatformStr);
+            tvProductCpuAbi.setText(productCpuAbiStr);
+            tvFistApiLevel.setText(firstApiLevelStr);
+            tvProductModel.setText(productModelStr);
+            tvProductName.setText(productNameStr);
+            tvBuildDate.setText(buildDateStr);
+
+            mAppCategory.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    switch (checkedId) {
+                        case R.id.radioBtnGoogle:
+                            mAppBaseAdapter.setAppCategory(R.id.radioBtnGoogle);
+                            break;
+                        case R.id.radioBtnOthers:
+                            mAppBaseAdapter.setAppCategory(R.id.radioBtnOthers);
+                            break;
+                        case R.id.radioBtnAll:
+                            mAppBaseAdapter.setAppCategory(R.id.radioBtnAll);
+                            break;
+                        default:
+                            mAppBaseAdapter.setAppCategory(R.id.radioBtnGoogle);
+                            break;
+                    }
+                }
+            });
+
+            RadioButton.OnClickListener radioBtnClickListener = new RadioButton.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                }
+            };
+
+            mAppGoogle.setChecked(true);
+
+            mListView.setAdapter(mAppBaseAdapter);
+            mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            mListView.setItemsCanFocus(false);
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    mAppBaseAdapter.setSelectedItem(position);
+                    mAppInfo = (AppInfo)mListView.getItemAtPosition(position);
+                }
+            });
+
+            mSearchField.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    mAppBaseAdapter.setSelectedItem(-1);
+                    mAppInfo = null;
+
+                    String text = mSearchField.getText().toString().toLowerCase();
+                    mAppBaseAdapter.filter(text);
+
+                    if (mAppBaseAdapter.getCount() == 1) {
+                        mAppBaseAdapter.setSelectedItem(0);
+                        mAppInfo = (AppInfo)mListView.getItemAtPosition(0);
+                    }
+                }
+            });
+
+            mBtnLaunch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    launch();
+                }
+            });
+
+            mBtnSetting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mAppInfo != null) {
+                        //Toast.makeText(VersionCheckActivity.this, mAppInfo.pkg, Toast.LENGTH_LONG).show();
+                        goAppInfo();
+//                    goPermissionsSetting();
+                    }
+                }
+            });
+
+            progressBar.setVisibility(View.GONE);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+    }
 /*
     public void getDataWithPkgInfo() {
         PackageManager pm = getPackageManager();
