@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -172,7 +173,7 @@ public class VersionCheckActivity extends AppCompatActivity {
             tvBuildFingerprint.setText(buildFingerprintStr);
             tvBoardPlatform.setText(boardPlatformStr);
             tvProductCpuAbi.setText(productCpuAbiStr);
-            tvFistApiLevel.setText(firstApiLevelStr);
+            tvFistApiLevel.setText(firstApiLevel(firstApiLevelStr));
             tvProductModel.setText(productModelStr);
             tvProductName.setText(productNameStr);
             tvBuildDate.setText(buildDateStr);
@@ -266,6 +267,52 @@ public class VersionCheckActivity extends AppCompatActivity {
             super.onCancelled();
         }
     }
+
+    private String firstApiLevel(String level) {
+        if (level == null) {
+            return "null";
+        }
+        level = level.trim();
+
+        int code = 0;
+        try {
+            code = Integer.parseInt(level);
+        } catch (Exception e) {
+            level = level + " : " + e.getMessage();
+        }
+
+        switch (code) {
+            case Build.VERSION_CODES.P:
+                level = level + " : P";
+                break;
+            case Build.VERSION_CODES.O_MR1:
+                level = level + " : O MR1";
+                break;
+            case Build.VERSION_CODES.O:
+                level = level + " : O";
+                break;
+            case Build.VERSION_CODES.N_MR1:
+                level = level + " : N MR1";
+                break;
+            case Build.VERSION_CODES.N:
+                level = level + " : N";
+                break;
+            case Build.VERSION_CODES.M:
+                level = level + " : M";
+                break;
+            case Build.VERSION_CODES.LOLLIPOP_MR1:
+                level = level + " : L MR1";
+                break;
+            case Build.VERSION_CODES.LOLLIPOP:
+                level = level + " : L";
+                break;
+            default:
+                break;
+        }
+
+        return level;
+    }
+
 /*
     public void getDataWithPkgInfo() {
         PackageManager pm = getPackageManager();

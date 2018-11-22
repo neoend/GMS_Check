@@ -90,7 +90,6 @@
             android:layout_weight="1"
             android:text="@string/product_cpu_abi" />
         <TextView
-            android:id="@+id/first_api_level"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -113,9 +112,11 @@
             android:layout_weight="1"
             android:text="@string/board_platform_str" />
         <TextView
+            android:id="@+id/first_api_level"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="@string/first_api_level" />
     </LinearLayout>
     <TextView
         android:id="@+id/build_date"
