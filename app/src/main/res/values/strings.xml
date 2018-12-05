@@ -16,6 +16,7 @@
     <string name="mada">mada</string>
     <string name="build_fingerprint">build.fingerprint</string>
     <string name="build_date">build_date</string>
+    <string name="swversion">swversion</string>
     <string name="board_platform_str">board.platform</string>
     <string name="product_cpu_abi">product.cpu.abi</string>
     <string name="first_api_level">first_api_level</string>
@@ -25,4 +26,16 @@
     <string name="desc_grant_permission">Grant External storage access permission for reading system properties</string>
     <string name="buttonGrantPermission">Grant Permission</string>
     <string name="buttonGoAppSetting">Go App Setting</string>
+    <string name="title_activity_navigation_drawer">GMS Check</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">@string/app_name</string>
+    <string name="nav_header_subtitle">1.2.9</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="nav_menu_version_info">Version info.</string>
+    <string name="nav_menu_feature">Feature</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
