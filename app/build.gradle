@@ -29,8 +29,8 @@ android {
         applicationId "com.neoend.gms.check"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 20181029
-        versionName "1.2.9"
+        versionCode 20181030
+        versionName "1.2.10"
     }
     buildTypes {
         release {

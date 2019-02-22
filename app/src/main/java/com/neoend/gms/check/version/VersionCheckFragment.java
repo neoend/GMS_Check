@@ -29,8 +29,6 @@ import android.widget.Toast;
 import com.neoend.gms.check.R;
 import com.neoend.gms.util.SystemProperty;
 
-import org.w3c.dom.Text;
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -59,34 +57,34 @@ public class VersionCheckFragment extends Fragment {
     public static final String EXTRA_PKG_NAME = "android.intent.extra.PACKAGE_NAME";
     public static final String URI_SCHEME_PKG = "package:";
 
-    private TextView tvGmsVersion;
-    private TextView tvMada;
-    private TextView tvBuildFingerprint;
-    private TextView tvBoardPlatform;
-    private TextView tvProductCpuAbi;
-    private TextView tvFistApiLevel;
-    private TextView tvProductModel;
-    private TextView tvProductName;
-    private TextView tvBuildDate;
-    private TextView tvSwversion;
+    private TextView mGmsVersionTextView;
+    private TextView mMadaTextView;
+    private TextView mBuildFingerprintTextView;
+    private TextView mBoardPlatformTextView;
+    private TextView mProductCpuAbiTextView;
+    private TextView mFistApiLevelTextView;
+    private TextView mProductModelTextView;
+    private TextView mProductNameTextView;
+    private TextView mBuildDateTextView;
+    private TextView mSwversionTextView;
 
-    private ProgressBar progressBar;
+    private ProgressBar mProgressBar;
 
-    private EditText mSearchField;
-    private Button mBtnSetting;
-    private Button mBtnLaunch;
+    private EditText mSearchFieldEditText;
+    private Button mSettingButton;
+    private Button mLaunchButton;
     private CheckBox mCheckAllApps;
-    private RadioGroup mAppCategory;
-    private RadioButton mAppGoogle;
-    private RadioButton mAppOthers;
-    private RadioButton mAppAll;
+    private RadioGroup mAppCategoryRadioGroup;
+    private RadioButton mAppGoogleRadioButton;
+    private RadioButton mAppOthersRadioButton;
+    private RadioButton mAppAllRadioButton;
     private ListView mListView;
 
     private AppBaseAdapter mAppBaseAdapter;
 
     private AppInfo mAppInfo;
 
-    private SystemProperty systemProperty;
+    private SystemProperty mSystemProperty;
 
 
     public VersionCheckFragment() {
@@ -136,27 +134,27 @@ public class VersionCheckFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View content = inflater.inflate(R.layout.version_check, container, false);
-        tvGmsVersion = content.findViewById(R.id.gms_version);
-        tvMada = content.findViewById(R.id.mada);
-        tvBuildFingerprint = content.findViewById(R.id.build_fingerprint);
-        tvBoardPlatform = content.findViewById(R.id.board_platform);
-        tvProductCpuAbi = content.findViewById(R.id.product_cpu_abi);
-        tvFistApiLevel = content.findViewById(R.id.first_api_level);
-        tvProductModel = content.findViewById(R.id.product_model);
-        tvProductName = content.findViewById(R.id.product_name);
-        tvBuildDate = content.findViewById(R.id.build_date);
-        tvSwversion = content.findViewById(R.id.swversion);
+        mGmsVersionTextView = content.findViewById(R.id.gms_version);
+        mMadaTextView = content.findViewById(R.id.mada);
+        mBuildFingerprintTextView = content.findViewById(R.id.build_fingerprint);
+        mBoardPlatformTextView = content.findViewById(R.id.board_platform);
+        mProductCpuAbiTextView = content.findViewById(R.id.product_cpu_abi);
+        mFistApiLevelTextView = content.findViewById(R.id.first_api_level);
+        mProductModelTextView = content.findViewById(R.id.product_model);
+        mProductNameTextView = content.findViewById(R.id.product_name);
+        mBuildDateTextView = content.findViewById(R.id.build_date);
+        mSwversionTextView = content.findViewById(R.id.swversion);
 
-        progressBar = content.findViewById(R.id.progressBar);
+        mProgressBar = content.findViewById(R.id.progressBar);
 
-        mSearchField = content.findViewById(R.id.search_field);
-        mBtnLaunch = content.findViewById(R.id.btn_launch);
-        mBtnSetting = content.findViewById(R.id.btn_setting);
+        mSearchFieldEditText = content.findViewById(R.id.search_field);
+        mLaunchButton = content.findViewById(R.id.btn_launch);
+        mSettingButton = content.findViewById(R.id.btn_setting);
         //mCheckAllApps = findViewById(R.id.check_all_apps);
-        mAppCategory = content.findViewById(R.id.radioGroupAppCategory);
-        mAppGoogle = content.findViewById(R.id.radioBtnGoogle);
-        mAppOthers = content.findViewById(R.id.radioBtnOthers);
-        mAppAll = content.findViewById(R.id.radioBtnAll);
+        mAppCategoryRadioGroup = content.findViewById(R.id.radioGroupAppCategory);
+        mAppGoogleRadioButton = content.findViewById(R.id.radioBtnGoogle);
+        mAppOthersRadioButton = content.findViewById(R.id.radioBtnOthers);
+        mAppAllRadioButton = content.findViewById(R.id.radioBtnAll);
         mListView = content.findViewById(R.id.listview);
         return content;
     }
@@ -197,12 +195,12 @@ public class VersionCheckFragment extends Fragment {
 
     class ProcessingUITask extends AsyncTask<Integer, Integer, Integer> {
         protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected Integer doInBackground(Integer... integers) {
-            systemProperty = new SystemProperty();
+            mSystemProperty = new SystemProperty();
 
             mAppBaseAdapter = new AppBaseAdapter(getActivity());
 
@@ -218,33 +216,33 @@ public class VersionCheckFragment extends Fragment {
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
 
-            String gmsVersionStr = systemProperty.get("ro.com.google.gmsversion");
-            String madaStr = systemProperty.get("ro.com.lge.mada");
-            String buildFingerprintStr = systemProperty.get("ro.build.fingerprint");
-            String boardPlatformStr = systemProperty.get("ro.board.platform");
-            String productCpuAbiStr = systemProperty.get("ro.product.cpu.abi");
-            String firstApiLevelStr = systemProperty.get("ro.product.first_api_level");
-            String productModelStr = systemProperty.get("ro.product.model");
-            String productNameStr = systemProperty.get("ro.product.name");
-            String buildDateStr = systemProperty.get("ro.build.date");
-            String swversion = systemProperty.get("ro.lge.swversion");
-            if (TextUtils.isEmpty(swversion)) { swversion = systemProperty.get("ro.vendor.lge.swversion"); }
+            String gmsVersionStr = mSystemProperty.get("ro.com.google.gmsversion");
+            String madaStr = mSystemProperty.get("ro.com.lge.mada");
+            String buildFingerprintStr = mSystemProperty.get("ro.build.fingerprint");
+            String boardPlatformStr = mSystemProperty.get("ro.board.platform");
+            String productCpuAbiStr = mSystemProperty.get("ro.product.cpu.abi");
+            String firstApiLevelStr = mSystemProperty.get("ro.product.first_api_level");
+            String productModelStr = mSystemProperty.get("ro.product.model");
+            String productNameStr = mSystemProperty.get("ro.product.name");
+            String buildDateStr = mSystemProperty.get("ro.build.date");
+            String swversion = mSystemProperty.get("ro.lge.swversion");
+            if (TextUtils.isEmpty(swversion)) { swversion = mSystemProperty.get("ro.vendor.lge.swversion"); }
 
             if (TextUtils.isEmpty(gmsVersionStr)) { gmsVersionStr = getString(R.string.gms_version); }
             if (TextUtils.isEmpty(madaStr)) { madaStr = getString(R.string.mada); }
             if (TextUtils.isEmpty(boardPlatformStr)) { boardPlatformStr = getString(R.string.board_platform_str); }
-            tvGmsVersion.setText(gmsVersionStr);
-            tvMada.setText(madaStr);
-            tvBuildFingerprint.setText(buildFingerprintStr);
-            tvBoardPlatform.setText(boardPlatformStr);
-            tvProductCpuAbi.setText(productCpuAbiStr);
-            tvFistApiLevel.setText(firstApiLevel(firstApiLevelStr));
-            tvProductModel.setText(productModelStr);
-            tvProductName.setText(productNameStr);
-            tvBuildDate.setText(buildDateStr);
-            tvSwversion.setText(swversion);
+            mGmsVersionTextView.setText(gmsVersionStr);
+            mMadaTextView.setText(madaStr);
+            mBuildFingerprintTextView.setText(buildFingerprintStr);
+            mBoardPlatformTextView.setText(boardPlatformStr);
+            mProductCpuAbiTextView.setText(productCpuAbiStr);
+            mFistApiLevelTextView.setText(firstApiLevel(firstApiLevelStr));
+            mProductModelTextView.setText(productModelStr);
+            mProductNameTextView.setText(productNameStr);
+            mBuildDateTextView.setText(buildDateStr);
+            mSwversionTextView.setText(swversion);
 
-            mAppCategory.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            mAppCategoryRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     switch (checkedId) {
@@ -272,7 +270,7 @@ public class VersionCheckFragment extends Fragment {
                 }
             };
 
-            mAppGoogle.setChecked(true);
+            mAppGoogleRadioButton.setChecked(true);
 
             mListView.setAdapter(mAppBaseAdapter);
             mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -285,7 +283,7 @@ public class VersionCheckFragment extends Fragment {
                 }
             });
 
-            mSearchField.addTextChangedListener(new TextWatcher() {
+            mSearchFieldEditText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -297,7 +295,7 @@ public class VersionCheckFragment extends Fragment {
                     mAppBaseAdapter.setSelectedItem(-1);
                     mAppInfo = null;
 
-                    String text = mSearchField.getText().toString().toLowerCase();
+                    String text = mSearchFieldEditText.getText().toString().toLowerCase();
                     mAppBaseAdapter.filter(text);
 
                     if (mAppBaseAdapter.getCount() == 1) {
@@ -307,14 +305,14 @@ public class VersionCheckFragment extends Fragment {
                 }
             });
 
-            mBtnLaunch.setOnClickListener(new View.OnClickListener() {
+            mLaunchButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     launch();
                 }
             });
 
-            mBtnSetting.setOnClickListener(new View.OnClickListener() {
+            mSettingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mAppInfo != null) {
@@ -325,7 +323,7 @@ public class VersionCheckFragment extends Fragment {
                 }
             });
 
-            progressBar.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.GONE);
         }
 
         @Override

@@ -33,7 +33,7 @@ public class FeatureFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private TextView featureText;
+    private TextView mFeatureTextView;
 
     public FeatureFragment() {
         // Required empty public constructor
@@ -82,7 +82,7 @@ public class FeatureFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View contentView = inflater.inflate(R.layout.fragment_feature, container, false);
-        featureText = contentView.findViewById(R.id.featureText);
+        mFeatureTextView = contentView.findViewById(R.id.featureText);
         return contentView;
     }
 
@@ -90,7 +90,7 @@ public class FeatureFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         String features = SystemCommandJNI.getInstance().execute("/system/bin/pm list features");
-        featureText.setText(features);
+        mFeatureTextView.setText(features);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

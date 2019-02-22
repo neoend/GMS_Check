@@ -79,11 +79,11 @@ public class AppBaseAdapter extends BaseAdapter {
             v = mInflater.inflate(R.layout.app_info, null);
         }
 
-        TextView title = (TextView)v.findViewById(R.id.title);
-        TextView uid = (TextView)v.findViewById(R.id.uid);
-        TextView version = (TextView)v.findViewById(R.id.version);
-        TextView pkg = (TextView)v.findViewById(R.id.pkg);
-        ImageView icon = (ImageView)v.findViewById(R.id.icon);
+        TextView title = v.findViewById(R.id.title);
+        TextView uid = v.findViewById(R.id.uid);
+        TextView version = v.findViewById(R.id.version);
+        TextView pkg = v.findViewById(R.id.pkg);
+        ImageView icon = v.findViewById(R.id.icon);
 
         title.setText(getItem(position).name);
         uid.setText(getItem(position).uid);

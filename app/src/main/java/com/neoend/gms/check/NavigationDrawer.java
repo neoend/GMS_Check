@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -26,10 +25,10 @@ public class NavigationDrawer extends AppCompatActivity
     }
 
     private static final String TAG = "gms";
-    private NavMenu navMenu;
-    private FragmentManager fragmentManager;
-    private VersionCheckFragment versionCheckFragment;
-    private FeatureFragment featureFragment;
+    private NavMenu mNavMenu;
+    private FragmentManager mFragmentManager;
+    private VersionCheckFragment mVersionCheckFragment;
+    private FeatureFragment mFeatureFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +56,11 @@ public class NavigationDrawer extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        fragmentManager = getSupportFragmentManager();
-        versionCheckFragment = VersionCheckFragment.newInstance(null, null);
-        featureFragment = FeatureFragment.newInstance(null, null);
+        mFragmentManager = getSupportFragmentManager();
+        mVersionCheckFragment = VersionCheckFragment.newInstance(null, null);
+        mFeatureFragment = FeatureFragment.newInstance(null, null);
 
-        navMenu = NavMenu.VER_CHECK;
+        mNavMenu = NavMenu.VER_CHECK;
         openVersionCheck();
         navigationView.getMenu().getItem(0).setChecked(true);
     }
@@ -105,11 +104,11 @@ public class NavigationDrawer extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_version_info) {
-            if (navMenu != NavMenu.VER_CHECK) {
+            if (mNavMenu != NavMenu.VER_CHECK) {
                 openVersionCheck();
             }
         } else if (id == R.id.nav_feature) {
-            if (navMenu != NavMenu.FEATURE) {
+            if (mNavMenu != NavMenu.FEATURE) {
                 openFeature();
             }
         }
@@ -125,12 +124,12 @@ public class NavigationDrawer extends AppCompatActivity
     }
 
     private void openVersionCheck() {
-        navMenu = NavMenu.VER_CHECK;
-        fragmentManager.beginTransaction().replace(R.id.contentFragment, versionCheckFragment).commit();
+        mNavMenu = NavMenu.VER_CHECK;
+        mFragmentManager.beginTransaction().replace(R.id.contentFragment, mVersionCheckFragment).commit();
     }
 
     private void openFeature() {
-        navMenu = NavMenu.FEATURE;
-        fragmentManager.beginTransaction().replace(R.id.contentFragment, featureFragment).commit();
+        mNavMenu = NavMenu.FEATURE;
+        mFragmentManager.beginTransaction().replace(R.id.contentFragment, mFeatureFragment).commit();
     }
 }
